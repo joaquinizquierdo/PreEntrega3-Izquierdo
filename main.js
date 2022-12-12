@@ -4,7 +4,6 @@ class Cancha {
         this.recaudado = 0;
         this.hora = [];
         this.valor = [precio, precio * 0.9];// Precio sin descuento (array 0) y precio con descuento (array 1)
-/*         this.valorDescuento = precio * 0.9; */
     }
 }
 
@@ -58,8 +57,6 @@ do {
             opcion = parseInt(prompt('Selecione una opción\n 1- Anotar cancha número 1\n 2- Anotar cancha número 2\n 3- Anotar cancha número 3\n 4- Cerrar día y mostrar informe', 'Ej: 1'))
     }
 } while (seguir)
-
-/* alert('En la cancha 1 se jugo ' + cancha1.vecesUsada + ' veces. Y se recaudo $' + cancha1.recaudado + '\n En la cancha 2 se jugo ' + cancha2.vecesUsada + ' veces. Y se recaudo $' + cancha2.recaudado  + '\n En la cancha 3 se jugo ' + cancha3.vecesUsada + ' veces. Y se recaudo $' + cancha3.recaudado); */
 
 cancha1.hora.sort((a, b) => a - b);
 cancha2.hora.sort((a, b) => a - b);
