@@ -1,68 +1,82 @@
+let usuario = '';
+usuario = localStorage.getItem('nombre');
+console.log(usuario);
+
+let nombre = document.getElementById('nombreOperador');
+
+if (usuario == '') {
+    usuario = prompt('Ingresar nombre del operador');
+    localStorage.setItem('nombre', usuario);
+    nombre.innerText = 'Operador' + usuario;
+}
+
+const limpiar = document.getElementById ("btnBorrar");
+limpiar.addEventListener ("click", limpiarStorage);
+
+function limpiarStorage () {
+    localStorage.setItem ('nombre', '');
+    usuario = prompt('Ingresar nombre del operador');
+    localStorage.setItem('nombre', usuario);
+    nombre.innerText = 'Operador ' + usuario;
+}
+
 class Cancha {
     constructor (precio) {
         this.vecesUsada = 0;
         this.recaudado = 0;
         this.hora = [];
+        this.horaDato;
         this.valor = [precio, precio * 0.9];// Precio sin descuento (array 0) y precio con descuento (array 1)
+        this.guardar;
+    }
+    guardarValores () {
+        this.vecesUsada++;
+        if (descuentoDato === true) {
+            this.recaudado = this.recaudado + this.valor[1];
+            descuentoDato = false; //Reseteo el valor
+            descuento.innerText = 'Aplicar descuento'; //Reseteo el boton
+        } else {
+            this.recaudado = this.recaudado + this.valor[0];
+        }
+        this.hora.push(this.horaDato.value);
+        this.hora.sort((a,b) => a - b);
     }
 }
 
 const cancha1 = new Cancha (2000);
-const cancha2 = new Cancha (2500);
-const cancha3 = new Cancha (3000);
 
-let opcion;
-let seguir = true;
+cancha1.guardar = document.getElementById("btnGuardar");
+cancha1.guardar.addEventListener("click", guardarReserva);
 
-function aplicarDescuento(cancha, precionDescuento, precioNormal) {
-    let descuento = false;
-    descuento = confirm('¿Se aplico el descuento?');
-    if (descuento == true) {
-        cancha = cancha + precionDescuento;
-        console.log('Descuento aplicado');
-        return cancha;
-    } else {
-        cancha = cancha + precioNormal;
-        console.log('Descuento no aplicado');
-        return cancha;      
-    }
+cancha1.horaDato = document.getElementById("horario");
+
+function guardarReserva () {
+    cancha1.guardarValores ();
+
+    const veces = document.getElementById ('vecesCancha');
+    veces.innerText = 'Veces usada: ' + cancha1.vecesUsada;
+
+    const total = document.getElementById ('totalCancha');
+    total.innerText = 'Recaudado: $' + cancha1.recaudado;
+
+    const horarios = document.getElementById ('horariosCancha');
+    horarios.innerText = 'Horarios: ' + cancha1.hora.join(', ');
 }
 
-do {
-    opcion = parseInt(prompt('Selecione una opción\n 1- Anotar cancha número 1\n 2- Anotar cancha número 2\n 3- Anotar cancha número 3\n 4- Cerrar día y mostrar informe', 'Ej: 1'));
+//Boton de descuento
 
-    switch (opcion) {
-        case 1:
-            cancha1.vecesUsada++;
-            cancha1.hora.push(prompt('¿En que horario?'));
-            cancha1.recaudado = aplicarDescuento(cancha1.recaudado, cancha1.valor[1], cancha1.valor[0]);
-            alert('Se jugo en la cancha 1: ' + cancha1.vecesUsada + ' veces');
-            break;
-        case 2:
-            cancha2.vecesUsada++;
-            cancha2.hora.push(prompt('¿En que horario?'));
-            cancha2.recaudado = aplicarDescuento(cancha2.recaudado, cancha2.valor[1], cancha2.valor[0]);
-            alert('Se jugo en la cancha 2: ' + cancha2.vecesUsada + ' veces');
-            break;
-        case 3:
-            cancha3.vecesUsada++;
-            cancha3.hora.push(prompt('¿En que horario?'));
-            cancha3.recaudado = aplicarDescuento(cancha3.recaudado, cancha3.valor[1], cancha3.valor[0]);
-            alert('Se jugo en la cancha 3: ' + cancha3.vecesUsada + ' veces');
-            break;
-        case 4:
-            seguir = false;
-            break;
-        default:
-            opcion = parseInt(prompt('Selecione una opción\n 1- Anotar cancha número 1\n 2- Anotar cancha número 2\n 3- Anotar cancha número 3\n 4- Cerrar día y mostrar informe', 'Ej: 1'))
+let descuentoDato = false;
+const descuento = document.getElementById ("btnDescuento");
+descuento.addEventListener ("click", aplicarDescuento);
+
+function aplicarDescuento () {
+    if (descuentoDato === false) {
+        descuentoDato = true;
+        console.log('Descuento aplicado');
+        descuento.innerText = 'Cancelar descuento';
+    } else {
+        descuentoDato = false;
+        console.log('Descuento removido');
+        descuento.innerText = 'Aplicar descuento';
     }
-} while (seguir)
-
-cancha1.hora.sort((a, b) => a - b);
-cancha2.hora.sort((a, b) => a - b);
-cancha3.hora.sort((a, b) => a - b);
-
-alert('Cancha 1:\nSe jugo ' + cancha1.vecesUsada + ' veces. Y se recaudo $' + cancha1.recaudado + '\nHorarios:\n' + cancha1.hora.join('\n'));
-alert('Cancha 2:\nSe jugo ' + cancha2.vecesUsada + ' veces. Y se recaudo $' + cancha2.recaudado + '\nHorarios:\n' + cancha2.hora.join('\n'));
-alert('Cancha 3:\nSe jugo ' + cancha3.vecesUsada + ' veces. Y se recaudo $' + cancha3.recaudado + '\nHorarios:\n' + cancha3.hora.join('\n'));
-
+}
