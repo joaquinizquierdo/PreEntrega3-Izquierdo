@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+button {
+    border-radius: 5px;
+    background-color: #515151;
+    color: white;
+    border: none;
+    height: 2em;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    background-color: #515151;
+    padding: 10px;
+    color: white;
+}
+
+.tarjeta {
+    width: fit-content;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #515151;
+    color: white;
+    font-size: 20px;
+}
